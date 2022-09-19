@@ -1,0 +1,17 @@
+<h1>Hello World</h1>
+
+<h2>Hallo <%= nama %></h2>
+
+<h4>Daftar mhs</h4>
+<% if (mhs.length <1) { %>
+<p>data mhs kosong</p>
+<% } %>
+
+
+<% mhs.forEach(m => { %>
+
+<ul>
+    <li>nama = <%= m.nama %> </li>
+    <li>email = <%= m.email %> </li>
+</ul>
+<% }) %>
