@@ -11,7 +11,7 @@ const port = 3000
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
 app.use(express.static('public'))
-app.use(express.urlencoded({ extended: false })) // for parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 // app.use(express.json()) // for parsing application/json
 
 app.get('/', (req, res) => {
