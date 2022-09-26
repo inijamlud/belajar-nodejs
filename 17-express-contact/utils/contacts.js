@@ -17,7 +17,7 @@ const loadContact = () => {
     return contacts
 }
 
-// find contact by name
+// find contact by name 
 const findContact = (nama) => {
     const contacts = loadContact()
     const contact = contacts.find(
