@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const expressLayouts = require('express-ejs-layouts')
-const { loadContact, findContact, addContact, cekDuplikat } = require('./utils/contacts')
+const { loadContact, findContact, addContact, cekDuplikat, deleteContact } = require('./utils/contacts')
 const { check, body, validationResult } = require('express-validator');
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
@@ -90,7 +90,7 @@ app.post('/contact',
             return true
         }),
         check('email', 'Email tidak valid').isEmail(),
-        check('phone', 'No HP tidak valid').isMobilePhone('id-ID')
+        // check('phone', 'No HP tidak valid').isMobilePhone('id-ID')
     ],
     (req, res) => {
         const errors = validationResult(req)
@@ -107,6 +107,66 @@ app.post('/contact',
             req.flash('msg', 'Data kontak berhasil ditambahkan')
             // console.log(req);
             res.redirect('/contact')
+        }
+
+
+    })
+
+// delete contact
+app.get('/contact/delete/:nama', (req, res) => {
+    const contact = findContact(req.params.nama)
+
+    // jika kontak takada
+    if (!contact) {
+        res.status(404)
+        res.send('404')
+    } else {
+        deleteContact(req.params.nama)
+        req.flash('msg', 'Data kontak berhasil dihapus')
+        res.redirect('/contact')
+    }
+})
+
+
+// Form ubah data kontak
+app.get('/contact/edit/:nama', (req, res) => {
+    const contact = findContact(req.params.nama)
+    res.render('edit-contact', {
+        layout: 'layouts/main-layout',
+        title: 'Edit Kontak',
+        contact
+    })
+})
+
+
+// proses ubah data
+app.post('/contact/update',
+    [
+        body('nama').custom((value) => {
+            const duplikat = cekDuplikat(value)
+            if (duplikat) {
+                throw new Error('Nama kontak sudah terdaftar')
+            }
+            return true
+        }),
+        check('email', 'Email tidak valid').isEmail(),
+        // check('phone', 'No HP tidak valid').isMobilePhone('id-ID')
+    ],
+    (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            // return res.status(400).json({ errors: errors.array() });
+            res.render('edit-contact', {
+                title: 'Edit Contact',
+                layout: 'layouts/main-layout',
+                errors: errors.array(),
+                contact: req.body
+            })
+        } else {
+            // addContact(req.body)
+            // // kirim flash
+            // req.flash('msg', 'Data kontak berhasil ditambahkan')
+            // res.redirect('/contact')
         }
 
 

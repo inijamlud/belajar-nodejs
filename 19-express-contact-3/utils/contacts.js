@@ -43,6 +43,15 @@ const cekDuplikat = (nama) => {
 
 }
 
+// delete kontak 
+const deleteContact = (nama) => {
+    const contacts = loadContact()
+    const filterred = contacts.filter((contact) => contact.nama !== nama)
+
+    // console.log(filterred)
+    simpanContact(filterred)
+
+}
 
 
-module.exports = { loadContact, findContact, addContact, cekDuplikat }
+module.exports = { loadContact, findContact, addContact, cekDuplikat, deleteContact }
