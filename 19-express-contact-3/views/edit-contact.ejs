@@ -14,19 +14,19 @@
             <% } %>
 
             <form action="/contact/update" method="post">
-                <input type="hidden" name="nama_old" value="<%= contact.nama %> ">
+                <input type="hidden" name="oldNama" value="<%= contact.oldNama || contact.nama %>">
 
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" name="nama" value="<%= contact.nama %> " required>
+                    <input type="text" class="form-control" name="nama" value="<%= contact.nama %>" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="<%= contact.email %> ">
+                    <input type="email" class="form-control" name="email" value="<%= contact.email %>">
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">No HP</label>
-                    <input type="text" class="form-control" name="phone" value="<%= contact.phone %> ">
+                    <input type="text" class="form-control" name="phone" value="<%= contact.phone %>">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Ubah</button>

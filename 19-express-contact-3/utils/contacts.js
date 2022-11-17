@@ -53,5 +53,15 @@ const deleteContact = (nama) => {
 
 }
 
+const updateContacts = (contactBaru) => {
+    const contacts = loadContact()
+    // hilangkan kontak lama yang namanya sama dengan old nama
+    const filterred = contacts.filter((contact) => contact.nama !== contactBaru.oldNama)
+    console.log(filterred, contactBaru)
+    delete contactBaru.oldNama
+    filterred.push(contactBaru)
+    simpanContact(filterred)
+}
 
-module.exports = { loadContact, findContact, addContact, cekDuplikat, deleteContact }
+
+module.exports = { loadContact, findContact, addContact, cekDuplikat, deleteContact, updateContacts }
